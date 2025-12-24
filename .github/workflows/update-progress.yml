@@ -1,0 +1,106 @@
+name: Update Progress Tracker
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for commit counting
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      
+      - name: Update Progress Tracker
+        run: |
+          python - <<'EOF'
+          import re
+          import os
+          from datetime import datetime
+          import subprocess
+          
+          # Count total commits
+          result = subprocess.run(['git', 'rev-list', '--all', '--count'], 
+                                capture_output=True, text=True)
+          total_commits = int(result.stdout.strip())
+          
+          # Count files with lecture/week patterns
+          result = subprocess.run(['git', 'ls-files'], capture_output=True, text=True)
+          files = result.stdout.strip().split('\n')
+          
+          # Count completed lectures (files matching lecture_* or week_*)
+          lecture_files = [f for f in files if re.search(r'(lecture_|week_)\d+', f.lower()) 
+                          and f.endswith(('.ipynb', '.py', '.md'))]
+          
+          # Extract week numbers from filenames
+          week_pattern = re.compile(r'(?:lecture_|week_)(\d+)')
+          completed_weeks = set()
+          for f in lecture_files:
+              match = week_pattern.search(f.lower())
+              if match:
+                  week_num = int(match.group(1))
+                  if week_num <= 9:  # Only count weeks 1-9
+                      completed_weeks.add(week_num)
+          
+          # Calculate progress
+          total_weeks = 9
+          weeks_completed = len(completed_weeks)
+          overall_progress = (weeks_completed / total_weeks) * 100
+          
+          # Generate progress bars
+          def generate_bar(week_num):
+              if week_num in completed_weeks:
+                  return "████████████████████ 100% ✅"
+              else:
+                  return "░░░░░░░░░░░░░░░░░░░░   0%"
+          
+          # Build progress tracker content
+          progress_content = "```\\n"
+          for week in range(1, total_weeks + 1):
+              progress_content += f"Week {week}:  {generate_bar(week)}\\n"
+          
+          progress_content += f"\\nOverall Progress: {overall_progress:.1f}%\\n"
+          progress_content += f"Total Commits: {total_commits}\\n"
+          progress_content += f"Last Updated: {datetime.now().strftime('%Y-%m-%d')}\\n"
+          progress_content += "```"
+          
+          # Read README
+          with open('README.md', 'r', encoding='utf-8') as f:
+              readme = f.read()
+          
+          # Update progress section
+          pattern = r'<!-- PROGRESS_START -->.*?<!-- PROGRESS_END -->'
+          replacement = f'<!-- PROGRESS_START -->\\n{progress_content}\\n<!-- PROGRESS_END -->'
+          updated_readme = re.sub(pattern, replacement, readme, flags=re.DOTALL)
+          
+          # Write back to README
+          with open('README.md', 'w', encoding='utf-8') as f:
+              f.write(updated_readme)
+          
+          print(f"✅ Progress updated: {weeks_completed}/{total_weeks} weeks completed")
+          print(f"📊 Overall Progress: {overall_progress:.1f}%")
+          print(f"💾 Total Commits: {total_commits}")
+          EOF
+      
+      - name: Commit changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add README.md
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "📊 Auto-update progress tracker [skip ci]"
+            git push
+          fi

@@ -172,15 +172,7 @@ This certification covers industry-standard tools and frameworks:
 
 ---
 
-## 🔗 Resources
-
-- [Ready Tensor Platform](https://www.readytensor.ai)
-- [Hugging Face Documentation](https://huggingface.co/docs)
-- [Course Discord Community](https://discord.gg/readytensor)
-
----
-
-## 📝 Setup & Requirements
+##  Setup & Requirements
 
 ### Prerequisites
 ```bash
@@ -207,33 +199,9 @@ jupyter notebook
 
 ---
 
-## 🤝 About Me
-
-I'm currently pursuing the LLM Engineering and Deployment Certification to build production-ready skills in working with large language models. This repository serves as both a learning log and a showcase of practical implementations.
-
-**Connect with me:**
-- GitHub: [Your GitHub Profile]
-- LinkedIn: [Your LinkedIn Profile]
-- Twitter: [Your Twitter Handle]
-
----
-
-## 📜 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- **Ready Tensor** for providing this comprehensive certification program
-- **Abhyuday Desai, Ph.D.** - Course instructor and Ready Tensor CEO
-- The Hugging Face team for their incredible open-source contributions
-
----
-
 ## 📊 Progress Tracker
 
+<!-- PROGRESS_START -->
 ```
 Week 1:  ████████████████████ 100% ✅
 Week 2:  ░░░░░░░░░░░░░░░░░░░░   0%
@@ -246,7 +214,10 @@ Week 8:  ░░░░░░░░░░░░░░░░░░░░   0%
 Week 9:  ░░░░░░░░░░░░░░░░░░░░   0%
 
 Overall Progress: 11.1%
+Total Commits: 0
+Last Updated: 2025-12-25
 ```
+<!-- PROGRESS_END -->
 
 ---
 
