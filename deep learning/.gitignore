@@ -1,0 +1,71 @@
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# Keras Tuner files - hyperparameter tuning trials
+untitled_project/
+new_dir/
+trial_*/
+oracle.json
+tuner*.json
+
+# TensorFlow/Keras model checkpoints
+checkpoint
+checkpoint.*
+*.data-00000-of-00001
+*.index
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS specific
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Model files (optional - uncomment if you don't want to track trained models)
+# *.h5
+# *.keras
+# *.pb
+# saved_model/
+
+# Large datasets (optional - uncomment if datasets are very large)
+# *.csv
+
+# Logs
+*.log
+logs/
