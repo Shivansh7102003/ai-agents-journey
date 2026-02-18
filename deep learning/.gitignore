@@ -69,3 +69,5 @@ desktop.ini
 # Logs
 *.log
 logs/
+13_cnn/catsvsdogs/
+13_cnn/kaggle.json
